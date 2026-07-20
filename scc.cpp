@@ -1,12 +1,12 @@
 #include <iostream>
 #include <stack>
-using namespace std;
 
+using namespace std;
 int graph[100][100];
 int revGraph[100][100];
 bool visited[100];
-stack<int> st;
 
+stack<int> st;
 int n, e;
 
 // DFS on original graph
@@ -25,10 +25,12 @@ void dfs1(int node)
     st.push(node);
 }
 
+
 // DFS on reversed graph
 void dfs2(int node)
 {
     visited[node] = true;
+
     cout << node << " ";
 
     for(int i = 0; i < n; i++)
@@ -40,9 +42,13 @@ void dfs2(int node)
     }
 }
 
-int main()
+
+int main ()
 {
+    cout << "Enter number of vertices and edges: ";
     cin >> n >> e;
+
+cout << "Enter edges (u v):\n";
 
     for(int i = 0; i < e; i++)
     {
@@ -53,31 +59,44 @@ int main()
         revGraph[v][u] = 1;
     }
 
-    // Step 1: DFS fill order
+    // DFS on original graph
     for(int i = 0; i < n; i++)
     {
         if(!visited[i])
-            dfs1(i);
-    }
-
-    // reset visited
-    for(int i = 0; i < n; i++)
-        visited[i] = false;
-
-    cout << "SCCs:\n";
-
-    // Step 2: process stack
-    while(!st.empty())
-    {
-        int node = st.top();
-        st.pop();
-
-        if(!visited[node])
         {
-            dfs2(node);
-            cout << endl;
+            dfs1(i);
         }
     }
 
-    return 0;
+
+//reset visited arry 
+for (int i=0;i<n;i++)
+{
+    visited[i] = false;
+}
+
+
+//dfs on reversed graph
+cout << "Strongly connected components are :\n";
+
+
+
+
+
+while(!st.empty())
+{
+    int node = st.top();
+    st.pop();
+
+    if(!visited[node])
+    {
+        dfs2(node);
+        cout << endl;
+    }
+
+
+
+
+
+}
 }
